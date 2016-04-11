@@ -10,8 +10,8 @@ dependencies:
 
 test:
   override:
-    #- java -jar dfbuild-agent.jar -exec mvn package
-    - mvn package
+    - java -jar dfbuild-agent.jar -exec "mvn package"
+    #- mvn package
 
 general:
   artifacts:
