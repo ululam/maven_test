@@ -1,3 +1,10 @@
+## Customize dependencies
+dependencies:
+  pre:
+    - curl -O https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
+    - curl -O https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
+    - export JAVA_TOOL_OPTIONS=-javaagent:/tmp/dfbuild-agent.jar=PACKAGING_BASE_URI=file:///.,PRODUCT_KEY=simple-key/,BUILD_KEY=1460139750969/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=./
+
 general:
   artifacts:
     - "target/my-app-1.0-SNAPSHOT.jar"
