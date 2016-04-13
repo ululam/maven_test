@@ -5,8 +5,8 @@ machine:
 
 dependencies:
   pre:
-    - curl -O https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
-    - curl -O https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
+    - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
+    - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
 
 test:
   override:
