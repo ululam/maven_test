@@ -2,7 +2,9 @@
 machine:
   environment:
     #JAVA_TOOL_OPTIONS: -javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=file://.,PRODUCT_KEY=dfb.test-project/,BUILD_KEY=1460139750969/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=.
-    JAVA_TOOL_OPTIONS: -javaagent:/home/ubuntu/maven_test/dfbuild-agent.jar=PACKAGING_BASE_URI=file:/home/ubuntu/maven_test/,PRODUCT_KEY=dfb.maven_test/,BUILD_KEY=1460553768978/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=/home/ubuntu/maven_test
+    JAVA_TOOL_OPTIONS: -javaagent:/home/ubuntu/maven_test/dfbuild-agent.jar=PACKAGING_BASE_URI=s3://external-ci-artifacts/artifacts/maven_test/,PRODUCT_KEY=dfb.maven_test/,BUILD_KEY=1460553768978/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=/home/ubuntu/maven_test
+    AWS_ACCESS_KEY_ID: AKIAIIU2LBOCCKXAIFZQ
+    AWS_SECRET_ACCESS_KEY: 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
 
 dependencies:
   pre:
