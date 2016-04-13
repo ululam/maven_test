@@ -8,9 +8,9 @@ dependencies:
     - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
     - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
 
-test:
-  override:
-    - java -jar dfbuild-agent.jar -exec "mvn package"
+#test:
+  #override:
+    #- java -jar dfbuild-agent.jar -exec "mvn package"
     #- mvn package
 
 general:
