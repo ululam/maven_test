@@ -1,7 +1,3 @@
 language: java
-  before_install:
-    - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
-    - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
-  env:
-    - JAVA_TOOL_OPTIONS=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=file:/.,PRODUCT_KEY=dfb.test-project/,BUILD_KEY=1460139750969/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=.
+script: mvn clean integration-test
 
