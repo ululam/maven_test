@@ -1,4 +1,7 @@
 language: java
+before_install:
+  - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
+  - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
 env:
   - V_BUILD_TIME=$(($(date +%s%N)/1000000))
   - V_PROJECT_DIR=$(pwd)
