@@ -14,10 +14,11 @@ env:
     - DFB_PACKAGING_URL=s3://external-ci-artifacts/artifacts/travis/
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
-  matrix:
-    - JAVA_TOOL_OPTIONS=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=dfb.$DFB_CURRENT_PROJECT/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
+    - JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=dfb.$DFB_CURRENT_PROJECT/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
 
-script: mvn clean integration-test
+script:
+  - export JAVA_TOOL_OPTIONS=$JTO # Set it only just berfore build. Travis calls java for version purposes BEFORE before_install and fails
+  - mvn clean integration-test
 
 after_success:
   - wget $DFB_AGENTS_URL/my-app-1.0-SNAPSHOT.jar
