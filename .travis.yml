@@ -8,7 +8,6 @@ before_install:
 
 env:
   global:
-#    - DFB_BUILD_ID=$(($(date +%s%N)/1000000))
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
     - DFB_CURRENT_PROJECT=$(basename $PWD)
