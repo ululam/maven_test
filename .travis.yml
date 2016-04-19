@@ -3,7 +3,7 @@ language: java
 before_install:
   - export DFB_AGENTS_URL=https://s3.amazonaws.com/external-ci-artifacts/agents
   - wget $DFB_AGENTS_URL/downloader.sh
-  - chdmod a+x downloader.sh
+  - chmod a+x downloader.sh
   - ./downloader.sh $DFB_AGENTS_URL
 
 env:
