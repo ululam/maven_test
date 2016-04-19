@@ -12,7 +12,7 @@ env:
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
 
-before_install:
+before_script:
   - wget $DFB_AGENTS_URL/downloader.sh
   - chdmod a+x downloader.sh
   - ./downloader.sh $DFB_AGENTS_URL
