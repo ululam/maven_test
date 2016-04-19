@@ -1,13 +1,8 @@
 language: java
 
-before_install:
-  - export DFB_AGENTS_URL=https://s3.amazonaws.com/external-ci-artifacts/agents
-  - wget $DFB_AGENTS_URL/downloader.sh
-  - chmod a+x downloader.sh
-  - ./downloader.sh $DFB_AGENTS_URL
-
 env:
   global:
+    - DFB_AGENTS_URL=https://s3.amazonaws.com/external-ci-artifacts/agents
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
     - DFB_CURRENT_PROJECT=$(basename $PWD)
@@ -16,10 +11,18 @@ env:
     - AWS_SECRET_ACCESS_KEY=gKcRJCpesBg+tC000NmHvwMyU68TtDCa9809s28Z
     - JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=dfb.$DFB_CURRENT_PROJECT/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
 
+before_install:
+  - wget $DFB_AGENTS_URL/downloader.sh
+  - chmod a+x downloader.sh
+  - ./downloader.sh $DFB_AGENTS_URL
+
 script:
-  - export JAVA_TOOL_OPTIONS=$JTO # Set it only just berfore build. Travis calls java for version purposes BEFORE before_install and fails
+  - export JAVA_TOOL_OPTIONS=$JTO # Set it just before build. Travis calls java for version purposes BEFORE before_install and fails
   - mvn clean integration-test
 
-after_success:
-  - wget $DFB_AGENTS_URL/my-app-1.0-SNAPSHOT.jar
-  - java -jar my-app-1.0-SNAPSHOT.jar
+notifications:
+ - webhooks:
+  urls:
+    - "https://webhooks.gitter.im/e/f1ba3be2fd9790bb5d2d"
+  - on_success: always  # options: [always|never|change] default: always
+  - on_failure: never # options: [always|never|change] default: always
