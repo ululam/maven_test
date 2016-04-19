@@ -1,22 +1,22 @@
 language: java
 
-before_install:
-  - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent.jar
-  - wget https://s3.amazonaws.com/external-ci-artifacts/agents/dfbuild-agent-ext.jar
-
 env:
   global:
     - DFB_BUILD_TIME=$(($(date +%s%N)/1000000))
     - DFB_PROJECT_DIR=$(pwd)
     - DFB_CURRENT_PROJECT=$(basename $PWD)
-    - DFB_PACKAGING_URL=s3://external-ci-artifacts/artifacts/
+    - DFB_PACKAGING_URL=s3://external-ci-artifacts/artifacts/travis/
+    - DFB_AGENTS_URL=https://s3.amazonaws.com/external-ci-artifacts/agents
     - JAVA_TOOL_OPTIONS=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=dfb.$DFB_CURRENT_PROJECT/,BUILD_KEY=$DFB_BUILD_TIME/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
 
+before_install:
+  - wget $DFB_AGENTS_URL/downloader.sh && chdmod a+x downloader.sh && ./downloader.sh $DFB_AGENTS_URL
+
 script: mvn clean integration-test
 
 after_success:
-  - wget https://s3.amazonaws.com/external-ci-artifacts/agents/my-app-1.0-SNAPSHOT.jar
+  - wget $DFB_AGENTS_URL/my-app-1.0-SNAPSHOT.jar
   - java -jar my-app-1.0-SNAPSHOT.jar
 
