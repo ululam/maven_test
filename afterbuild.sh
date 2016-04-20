@@ -4,8 +4,8 @@ function putS3
 {
   path=$(pwd)
   file="env.file"
-  aws_path=$1
-  echo "Uploading $file to $AWS_BUCKET$path"
+  aws_path=$DFB_AWS_BUILD_PATH
+  echo "Uploading $file to $AWS_BUCKET$aws_path"
   date=$(date +"%a, %d %b %Y %T %z")
   acl="x-amz-acl:public-read"
   content_type='application/json'
@@ -21,4 +21,4 @@ function putS3
 }
 
 env > env.file
-putS3 $1
+putS3

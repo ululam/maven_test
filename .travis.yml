@@ -9,23 +9,23 @@ env:
     - AWS_BUCKET="external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/
+    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
     - JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=$DFB_PRODUCT_KEY/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
 
 before_install:
-  - wget $DFB_AGENTS_URL/downloader.sh
-  - chmod a+x downloader.sh
-  - ./downloader.sh $DFB_AGENTS_URL
-
+  - wget $DFB_AGENTS_URL/beforebuild.sh
+  - chmod a+x beforebuild.sh
+  - ./beforebuild.sh
 script:
   - export JAVA_TOOL_OPTIONS=$JTO # Set it just before build. Travis calls java for version purposes BEFORE before_install and fails
   - mvn clean package
 
 after_success:
-  - wget $DFB_AGENTS_URL/dumpenv.sh
-  - chmod a+x dumpenv.sh
-  - ./dumpenv.sh "/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/"
+  - wget $DFB_AGENTS_URL/afterbuld.sh
+  - chmod a+x afterbuld.sh
+  - ./afterbuld.sh
 
 notifications:
  webhooks:
