@@ -4,7 +4,8 @@ env:
   global:
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
-    - DFB_PRODUCT_KEY=dfb.$(basename $PWD)
+    - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
+    - DFB_PRODUCT_KEY=dfb.$DFB_PRODUCT_NAME
     - AWS_BUCKET="external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/
