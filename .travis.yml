@@ -23,9 +23,9 @@ script:
   - mvn clean package
 
 after_success:
-  - wget $DFB_AGENTS_URL/afterbuld.sh
-  - chmod a+x afterbuld.sh
-  - ./afterbuld.sh
+  - wget $DFB_AGENTS_URL/afterbuild.sh
+  - chmod a+x afterbuild.sh
+  - ./afterbuild.sh
 
 notifications:
  webhooks:
