@@ -5,6 +5,7 @@ function putS3
   path=$(pwd)
   file="env.file"
   aws_path=$1
+  echo "Uploading $file to $AWS_BUCKET$path"
   date=$(date +"%a, %d %b %Y %T %z")
   acl="x-amz-acl:public-read"
   content_type='application/json'
