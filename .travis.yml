@@ -4,8 +4,9 @@ env:
   global:
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
-    - DFB_PRODUCT_NAME=$(basename ${DFB_PROJECT_DIR})
-    - DFB_OWNER_NAME=$(basename $(dirname ${DFB_PROJECT_DIR}))
+    - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
+    - project_parent_dir = $(dirname $DFB_PROJECT_DIR) # Temp var to avoid strange error with "))" at build  server
+    - DFB_OWNER_NAME=$(basename $project_parent_dir)
       # This name is important convention, same is used in TravisWebhookController
     - DFB_PRODUCT_KEY="${DFB_OWNER_NAME}_${DFB_PRODUCT_NAME}"
     - AWS_BUCKET="external-ci-artifacts"
