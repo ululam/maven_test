@@ -5,7 +5,9 @@ env:
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
     - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
-    - DFB_PRODUCT_KEY=dfb.$DFB_PRODUCT_NAME
+    - DFB_OWNER_NAME=$(basename $(dirname $DFB_PROJECT_DIR))
+      # This name is important convention, same is used in TravisWebhookController
+    - DFB_PRODUCT_KEY=$DFB_OWNER_NAME_$DFB_PRODUCT_NAME
     - AWS_BUCKET="external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/
