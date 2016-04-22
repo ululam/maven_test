@@ -1,12 +1,15 @@
 language: java
 
+jdk:
+  - oraclejdk8
+
 env:
   global:
+    - TMP_PROJECT_PARENT_DIR=$(dirname $DFB_PROJECT_DIR) # Temp var to avoid strange error with "))" at build  server in DFB_OWNER_NAME
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
     - DFB_PROJECT_DIR=$(pwd)
     - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
-    - project_parent_dir=$(dirname $DFB_PROJECT_DIR) # Temp var to avoid strange error with "))" at build  server
-    - DFB_OWNER_NAME=$(basename $project_parent_dir)
+    - DFB_OWNER_NAME=$(basename $TMP_PROJECT_PARENT_DIR)
       # This name is important convention, same is used in TravisWebhookController
     - DFB_PRODUCT_KEY="${DFB_OWNER_NAME}_${DFB_PRODUCT_NAME}"
     - AWS_BUCKET="external-ci-artifacts"
@@ -47,6 +50,7 @@ notifications:
  webhooks:
   urls:
     - "https://webhooks.gitter.im/e/f1ba3be2fd9790bb5d2d"
+    - "http://77.37.164.20"
   on_success: always  # options: [always|never|change] default: always
   on_failure: always # options: [always|never|change] default: always
   on_start: never
