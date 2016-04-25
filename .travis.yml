@@ -5,9 +5,9 @@ jdk:
 
 env:
   global:
+    - DFB_PROJECT_DIR=$(pwd)
     - TMP_PROJECT_PARENT_DIR=$(dirname $DFB_PROJECT_DIR) # Temp var to avoid strange error with "))" at build  server in DFB_OWNER_NAME
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
-    - DFB_PROJECT_DIR=$(pwd)
     - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
     - DFB_OWNER_NAME=$(basename $TMP_PROJECT_PARENT_DIR)
       # This name is important convention, same is used in TravisWebhookController
