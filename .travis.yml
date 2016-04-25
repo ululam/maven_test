@@ -12,7 +12,7 @@ env:
     - DFB_OWNER_NAME=$(basename $TMP_PROJECT_PARENT_DIR)
       # This name is important convention, same is used in TravisWebhookController
     - DFB_PRODUCT_KEY="${DFB_OWNER_NAME}_${DFB_PRODUCT_NAME}"
-    - AWS_BUCKET="external-ci-artifacts"
+    - AWS_BUCKET="aline-external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/
     - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/
