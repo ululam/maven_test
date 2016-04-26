@@ -1,0 +1,170 @@
+{
+  "id": 125623810,
+  "repository": {
+    "id": 8377874,
+    "name": "maven_test",
+    "owner_name": "danielfc",
+    "url": null
+  },
+  "number": "34",
+  "config": {
+    "language": "java",
+    "jdk": [
+      "oraclejdk8"
+    ],
+    "env": [
+      "[One of the secure variables in your .travis.yml has an invalid format.]"
+    ],
+    "before_install": [
+      "wget $DFB_AGENTS_URL/beforebuild.sh",
+      "chmod a+x beforebuild.sh",
+      "./beforebuild.sh"
+    ],
+    "script": [
+      "ex
+      port
+      JAVA_TOOL_OPTIONS
+      =
+      $JTO
+      ",
+      "mvn clean test-compile"
+    ],
+    "after_success": [
+      "unset JAVA_TOOL_OPTIONS",
+      "env > env.file",
+      "mvn test"
+    ],
+    "addons": {
+      "artifacts": {
+        "debug": true,
+        "paths": [
+          "$DFB_PROJECT_DIR/env.file",
+          "$(git ls-files -oi -x *.exec | tr \"\\n\" \":\")"
+        ],
+        "target_paths": "$DFB_TARGET_PATH",
+        "bucket": "$AWS_BUCKET"
+      }
+    },
+    "notifications": {
+      "webhooks": {
+        "urls": [
+          "http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis"
+          ;
+        ],
+        "on_success": "always",
+        "on_failure": "never",
+        "on_start": "never"
+      }
+    },
+    ".result": "configured"
+  },
+  "status": 0,
+  "result": 0,
+  "status_message": "Passed",
+  "result_message": "Passed",
+  "started_at": "2016-04-25T17:20:44Z",
+  "finished_at": "2016-04-25T17:24:37Z",
+  "duration": 233,
+  "build_url": "https://travis-ci.org/danielfc/maven_test/builds/125623810",
+  "commit_id": 35531200,
+  "commit": "406ffd9e5355022720a86a05384c48150b929de0",
+  "base_commit": null,
+  "head_commit": null,
+  "branch": "master",
+  "message": "Testing",
+  "compare_url": "https://github.com/danielfc/maven_test/compare/8fef70b16113...406ffd9e5355",
+  "committed_at": "2016-04-25T17:20:33Z",
+  "author_name": "Daniel Campos",
+  "author_email": "daniel.campos@devfactory.com",
+  "committer_name": "Daniel Campos",
+  "committer_email": "daniel.campos@devfactory.com",
+  "matrix": [
+    {
+      "id": 125623811,
+      "repository_id": 8377874,
+      "parent_id": 125623810,
+      "number": "34.1",
+      "state": "finished",
+      "config": {
+        "language": "java",
+        "jdk": "oraclejdk8",
+        "before_install": [
+          "wget $DFB_AGENTS_URL/beforebuild.sh",
+          "chmod a+x beforebuild.sh",
+          "./beforebuild.sh"
+        ],
+        "script": [
+          "export JAVA_TOOL_OPTIONS=$JTO",
+          "mvn clean test-compile"
+        ],
+        "after_success": [
+          "unset JAVA_TOOL_OPTIONS",
+          "env > env.file",
+          "mvn test"
+        ],
+        "addons": {
+          "artifacts": {
+            "debug": true,
+            "paths": [
+              "$DFB_PROJECT_DIR/env.file",
+              "$(git ls-files -oi -x *.exec | tr \"\\n\" \":\")"
+            ],
+            "target_paths": "$DFB_TARGET_PATH",
+            "bucket": "$AWS_BUCKET"
+          }
+        },
+        "notifications": {
+          "webhooks": {
+            "urls": [
+              "http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis"
+              ;
+            ],
+            "on_success": "always",
+            "on_failure": "never",
+            "on_start": "never"
+          }
+        },
+        ".result": "configured",
+        "global_env": [
+          "DFB_BUILD_ID=$TRAVIS_BUILD_ID",
+          "DFB_PROJECT_DIR=$(pwd)",
+          "DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)",
+          "DFB_PRODUCT_KEY=dfb.$DFB_PRODUCT_NAME",
+          "AWS_BUCKET=\"external-ci-artifacts\"",
+          "DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents"
+          ;,
+          "DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/",
+          "DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/",
+          "DFB_TARGET_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/target/",
+          "AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ",
+          "AWS_SECRET_ACCESS_KEY=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",
+          "JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=$DFB_PRODUCT_KEY/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR"
+        ],
+        "group": "stable",
+        "dist": "precise",
+        "os": "linux"
+      },
+      "status": 0,
+      "result": 0,
+      "commit": "406ffd9e5355022720a86a05384c48150b929de0",
+      "branch": "master",
+      "message": "Testing",
+      "compare_url": "https://github.com/danielfc/maven_test/compare/8fef70b16113...406ffd9e5355"
+      ;,
+      "started_at": "2016-04-25T17:20:44Z",
+      "finished_at": "2016-04-25T17:24:37Z",
+      "committed_at": "2016-04-25T17:20:33Z",
+      "author_name": "Daniel Campos",
+      "author_email": "daniel.campos@devfactory.com",
+      "committer_name": "Daniel Campos",
+      "committer_email": "daniel.campos@devfactory.com",
+      "allow_failure": false
+    }
+  ],
+  "type": "push",
+  "state": "passed",
+  "pull_request": false,
+  "pull_request_number": null,
+  "pull_request_title": null,
+  "tag": null
+}
