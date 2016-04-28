@@ -35,8 +35,7 @@ after_success:
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
   - env
   - git ls-files -oi -x .exec
-  - artifacts upload --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --bucket $DFB_AWS_BUCKET  --target-paths $DFB_AWS_BUILD_PATH \
-  $(git ls-files -oi -x *.exec | tr "\n" ":"):${DFB_PROJECT_DIR}/env.file
+  - artifacts upload --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --bucket $DFB_AWS_BUCKET  --target-paths $DFB_AWS_BUILD_PATH $(git ls-files -oi -x *.exec | tr "\n" ":"):${DFB_PROJECT_DIR}/env.file
 
 addons:
   artifacts:
