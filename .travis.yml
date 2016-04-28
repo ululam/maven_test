@@ -34,13 +34,10 @@ after_success:
   - mvn install
   - ./df-build.sh
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
-  - env
-  - git ls-files -oi -x .exec
+#  Reuse AWS_ set in env/globals
   - artifacts upload \
-    --key $AWS_ACCESS_KEY_ID \
-    --secret $AWS_SECRET_ACCESS_KEY \
     --bucket $DFB_AWS_BUCKET \
-    $(git ls-files -oi -x .exec | tr "\n" ":"):$DFB_PROJECT_DIR/env.file
+    $(git ls-files -oi -x *.exec | tr "\n" ":")
 
 addons:
   artifacts:
