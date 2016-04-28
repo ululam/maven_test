@@ -31,16 +31,29 @@ after_success:
   - unset JAVA_TOOL_OPTIONS # unset because jacoco agent conflicts with dfagent
   - env > env.file
   - mvn install
+  - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
+  - artifacts upload \
+    --key $AWS_ACCESS_KEY_ID \
+    --secret $AWS_SECRET_ACCESS_KEY \
+    --bucket $DFB_AWS_BUCKET \
+    $(git ls-files -oi -x *.exec | tr "\n" ":"):$DFB_PROJECT_DIR/env.file
 
 addons:
   artifacts:
     debug: true
     paths:
-      - $DFB_PROJECT_DIR/env.file
-      - $(git ls-files -oi -x *.exec | tr "\n" ":")
-    target_paths: $DFB_AWS_BUILD_PATH
-#    bucket: $DFB_AWS_BUCKET
+    - libs.zip
+    - build.zip
+    - test_build_key
+    target_paths: '18'
     bucket: "insights-artifacts"
+#  artifacts:
+#    debug: true
+#    paths:
+#      - $DFB_PROJECT_DIR/env.file
+#      - $(git ls-files -oi -x .exec | tr "\n" ":")
+#    target_paths: $DFB_AWS_BUILD_PATH
+##    bucket: $DFB_AWS_BUCKET
 
 notifications:
  webhooks:
