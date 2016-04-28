@@ -31,7 +31,7 @@ after_success:
   - unset JAVA_TOOL_OPTIONS # unset because jacoco agent conflicts with dfagent
   - env > env.file
   - mvn install
-  - build.sh
+  - ./df-build.sh
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
   - artifacts upload \
     --key $AWS_ACCESS_KEY_ID \
