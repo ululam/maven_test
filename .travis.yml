@@ -14,7 +14,7 @@ env:
     - DFB_AWS_BUCKET="aline-external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${DFB_AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${DFB_AWS_BUCKET}/artifacts/travis/
-    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/target/
+    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/output/
 #    todo Move to
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
