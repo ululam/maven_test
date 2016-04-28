@@ -1,21 +1,20 @@
 language: java
 
-jdk:
-  - oraclejdk8
+jdk: oraclejdk8
 
 env:
   global:
+    - DFB_PROJECT_DIR=$(pwd)
     - TMP_PROJECT_PARENT_DIR=$(dirname $DFB_PROJECT_DIR) # Temp var to avoid strange error with "))" at build  server in DFB_OWNER_NAME
     - DFB_BUILD_ID=$TRAVIS_BUILD_ID
-    - DFB_PROJECT_DIR=$(pwd)
     - DFB_PRODUCT_NAME=$(basename $DFB_PROJECT_DIR)
     - DFB_OWNER_NAME=$(basename $TMP_PROJECT_PARENT_DIR)
-      # This name is important convention, same is used in TravisWebhookController
+    # This name is important convention, same is used in TravisWebhookController
     - DFB_PRODUCT_KEY="${DFB_OWNER_NAME}_${DFB_PRODUCT_NAME}"
-    - AWS_BUCKET="external-ci-artifacts"
-    - DFB_AGENTS_URL=https://s3.amazonaws.com/${AWS_BUCKET}/agents
-    - DFB_PACKAGING_URL=s3://${AWS_BUCKET}/artifacts/travis/
-    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/
+    - DFB_AWS_BUCKET="aline-external-ci-artifacts"
+    - DFB_AGENTS_URL=https://s3.amazonaws.com/${DFB_AWS_BUCKET}/agents
+    - DFB_PACKAGING_URL=s3://${DFB_AWS_BUCKET}/artifacts/travis/
+    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/target/
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
     - JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=$DFB_PRODUCT_KEY/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
@@ -24,32 +23,29 @@ before_install:
   - wget $DFB_AGENTS_URL/beforebuild.sh
   - chmod a+x beforebuild.sh
   - ./beforebuild.sh
-
 script:
   - export JAVA_TOOL_OPTIONS=$JTO # Set it just before build. Travis calls java for version purposes BEFORE before_install and fails
-  - mvn clean compile
+  - mvn clean test-compile
 
 after_success:
   - unset JAVA_TOOL_OPTIONS # unset because jacoco agent conflicts with dfagent
   - env > env.file
-  - mvn test
+  - mvn install
 
 addons:
   artifacts:
     debug: true
-    paths: [$DFB_PROJECT_DIR/target/jacoco.exec, $DFB_PROJECT_DIR/env.file]
-    target_paths: [$DFB_AWS_BUILD_PATH]
-    bucket: $AWS_BUCKET
-
-#after_success:
-#  - wget $DFB_AGENTS_URL/afterbuild.sh
-#  - chmod a+x afterbuild.sh
-#  - ./afterbuild.sh
+    paths:
+      - $DFB_PROJECT_DIR/env.file
+      - $(git ls-files -oi -x *.exec | tr "\n" ":")
+    target_paths: $DFB_AWS_BUILD_PATH
+#    bucket: $DFB_AWS_BUCKET
+    bucket: "insights-artifacts"
 
 notifications:
  webhooks:
   urls:
     - "http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis"
-  on_success: always  # options: [always|never|change] default: always
-  on_failure: never # options: [always|never|change] default: always
+  on_success: always
+  on_failure: never
   on_start: never
