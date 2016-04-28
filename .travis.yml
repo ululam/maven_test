@@ -25,7 +25,7 @@ before_install:
   - ./beforebuild.sh
 script:
   - export JAVA_TOOL_OPTIONS=$DFB_JTO # Set it just before build. Travis calls java for version purposes BEFORE before_install and fails
-  - mvn clean test-compile
+  - mvn clean compile test-compile
 
 after_success:
   - unset JAVA_TOOL_OPTIONS # unset because jacoco agent conflicts with dfagent
@@ -35,7 +35,8 @@ after_success:
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
   - env
   - git ls-files -oi -x .exec
-  - artifacts upload --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --bucket $DFB_AWS_BUCKET $(git ls-files -oi -x *.exec | tr "\n" ":"):${DFB_PROJECT_DIR}/env.file
+  - artifacts upload --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --bucket $DFB_AWS_BUCKET  --target-paths $DFB_AWS_BUILD_PATH \
+  $(git ls-files -oi -x *.exec | tr "\n" ":"):${DFB_PROJECT_DIR}/env.file
 
 addons:
   artifacts:
