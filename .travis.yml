@@ -14,7 +14,7 @@ env:
     - DFB_AWS_BUCKET="aline-external-ci-artifacts"
     - DFB_AGENTS_URL=https://s3.amazonaws.com/${DFB_AWS_BUCKET}/agents
     - DFB_PACKAGING_URL=s3://${DFB_AWS_BUCKET}/artifacts/travis/
-    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/target/
+    - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/output/
 #    todo Move to
     - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
     - AWS_SECRET_ACCESS_KEY=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
@@ -35,9 +35,7 @@ after_success:
   - ./df-build.sh
   - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install | bash
 #  Reuse AWS_ set in env/globals
-  - artifacts upload \
-    --bucket $DFB_AWS_BUCKET \
-    $(git ls-files -oi -x *.exec | tr "\n" ":")
+  - artifacts upload --bucket $DFB_AWS_BUCKET $(git ls-files -oi -x *.exec | tr "\n" ":")
 
 addons:
   artifacts:
@@ -46,7 +44,7 @@ addons:
     - libs.zip
     - build.zip
     - test_build_key
-    target_paths: '18'
+    target_paths: '421'
     bucket: "insights-artifacts"
 
 #  artifacts:
@@ -57,10 +55,10 @@ addons:
 #    target_paths: $DFB_AWS_BUILD_PATH
 ##    bucket: $DFB_AWS_BUCKET
 
-notifications:
- webhooks:
-  urls:
-    - "http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis"
-  on_success: always
-  on_failure: never
-  on_start: never
+#notifications:
+# webhooks:
+#  urls:
+#    - "http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis"
+#  on_success: always
+#  on_failure: never
+#  on_start: never
