@@ -7,9 +7,7 @@ addons:
     - test_build_key
     target_paths: '467'
 after_success:
-- unset JAVA_TOOL_OPTIONS
 - env > env.file
-- mvn test
 - ./df-build.sh
 - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install |
   bash
@@ -41,5 +39,7 @@ language: java
 script:
 - export JAVA_TOOL_OPTIONS=$DFB_JTO
 - mvn clean compile test-compile
+- unset JAVA_TOOL_OPTIONS
+- mvn package
 sudo: 'false'
 # Modified by Insights Service at 2016-04-29 11:44:37.677471
