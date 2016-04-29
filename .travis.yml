@@ -5,11 +5,11 @@ addons:
     - libs.zip
     - build.zip
     - test_build_key
-    target_paths: '1566'
+    target_paths: '467'
 after_success:
 - unset JAVA_TOOL_OPTIONS
 - env > env.file
-- mvn install
+- mvn test
 - ./df-build.sh
 - curl -sL https://raw.githubusercontent.com/travis-ci/artifacts/master/install |
   bash
@@ -33,22 +33,13 @@ env:
   - DFB_AWS_BUCKET=aline-external-ci-artifacts
   - DFB_AGENTS_URL=https://s3.amazonaws.com/${DFB_AWS_BUCKET}/agents
   - DFB_PACKAGING_URL=s3://${DFB_AWS_BUCKET}/artifacts/travis/
-  - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/target/
+  - DFB_AWS_BUILD_PATH=/artifacts/travis/${DFB_PRODUCT_KEY}/${DFB_BUILD_ID}/output/
   - AWS_ACCESS_KEY_ID=AKIAIIU2LBOCCKXAIFZQ
   - AWS_SECRET_ACCESS_KEY=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
   - DFB_JTO=-javaagent:dfbuild-agent.jar=PACKAGING_BASE_URI=$DFB_PACKAGING_URL,PRODUCT_KEY=$DFB_PRODUCT_KEY/,BUILD_KEY=$DFB_BUILD_ID/,MODULES_KEY=modules/,START_TIME=0,BUILD_BASE_DIR=$DFB_PROJECT_DIR
-jdk:
-- oraclejdk8
 language: java
-notifications:
-  webhooks:
-    on_failure: never
-    on_start: never
-    on_success: always
-    urls:
-    - http://df-sdk-feed-dev.us-east-1.elasticbeanstalk.com/webhooks/travis
 script:
 - export JAVA_TOOL_OPTIONS=$DFB_JTO
 - mvn clean compile test-compile
 sudo: 'false'
-# Modified by Insights Service at 2016-04-29 00:39:04.485752
+# Modified by Insights Service at 2016-04-29 11:44:37.677471
