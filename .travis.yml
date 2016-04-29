@@ -5,7 +5,7 @@ addons:
     - libs.zip
     - build.zip
     - test_build_key
-    target_paths: '467'
+    target_paths: '1926'
 after_success:
 - env > env.file
 - ./df-build.sh
@@ -41,5 +41,4 @@ script:
 - mvn clean compile test-compile
 - unset JAVA_TOOL_OPTIONS
 - mvn package
-sudo: 'false'
-# Modified by Insights Service at 2016-04-29 11:44:37.677471
+# Modified by Insights Service at 2016-04-29 12:29:51.236284
