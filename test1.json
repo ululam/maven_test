@@ -1,0 +1,25 @@
+{
+  "id": 125847448,
+  "number": "42",
+  "status": null,
+  "started_at": null,
+  "finished_at": null,
+  "status_message": "Passed",
+  "commit": "62aae5f70ceee39123ef",
+  "branch": "master",
+  "message": "the commit message",
+  "compare_url": "https://github.com/danielfc/maven_test/compare/master...develop",
+  "committed_at": "2011-11-11T11: 11: 11Z",
+  "committer_name": "Sven Fuchs",
+  "committer_email": "svenfuchs@artweb-design.de",
+  "author_name": "Sven Fuchs",
+  "author_email": "svenfuchs@artweb-design.de",
+  "type": "push",
+  "build_url": "https://travis-ci.org/danielfc/maven_test/builds/42",
+  "repository": {
+    "id": 100010,
+    "name": "minimal",
+    "owner_name": "svenfuchs",
+    "url": "http://github.com/danielfc/maven_test"
+  }
+}
